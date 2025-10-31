@@ -1,0 +1,20 @@
+api = "0.10"
+
+[buildpack]
+id = "snakedoc/erlang"
+name = "Erlang"
+version = "0.0.1"
+homepage = "https://github.com/SnakeDoc/erlang-cnb"
+description = "A Cloud Native Buildpack that provides the Erlang runtime"
+keywords = ["erlang", "beam", "otp"]
+
+[[buildpack.licenses]]
+type = "Apache-2.0"
+uri = "https://github.com/SnakeDoc/erlang-cnb/blob/main/LICENSE"
+
+[[provides]]
+id = "erlang"
+name = "Erlang"
+
+[[stacks]]
+id = "*"
