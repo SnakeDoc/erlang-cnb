@@ -10,6 +10,7 @@ import (
 func TestUnitErlang(t *testing.T) {
 	suite := spec.New("erlang", spec.Report(report.Terminal{}))
 	suite("ErlangVersionResolver", testErlangVersionResolver)
+	suite("ToolVersionsParser", testToolVersionsParser)
 	suite("ErlangInstaller", testErlangInstaller)
 	suite.Run(t)
 }
