@@ -34,7 +34,7 @@ func (p ToolVersionsParser) ParseVersion(path string) (string, error) {
 		parts := strings.Fields(line)
 		if len(parts) >= 2 && parts[0] == "erlang" {
 			version := parts[1]
-			return NormalizeVersion(version), nil
+			return version, nil
 		}
 	}
 

@@ -37,7 +37,7 @@ func testToolVersionsParser(t *testing.T, context spec.G, it spec.S) {
 
 		version, err := parser.ParseVersion(path)
 		Expect(err).NotTo(HaveOccurred())
-		Expect(version).To(Equal("OTP-28.1.1"))
+		Expect(version).To(Equal("28.1.1"))
 	})
 
 	it("finds erlang version among multiple tools", func() {
@@ -51,7 +51,7 @@ func testToolVersionsParser(t *testing.T, context spec.G, it spec.S) {
 
 		version, err := parser.ParseVersion(path)
 		Expect(err).NotTo(HaveOccurred())
-		Expect(version).To(Equal("OTP-28.1.1"))
+		Expect(version).To(Equal("28.1.1"))
 	})
 
 	it("normalizes version without OTP- prefix", func() {
@@ -60,16 +60,7 @@ func testToolVersionsParser(t *testing.T, context spec.G, it spec.S) {
 
 		version, err := parser.ParseVersion(path)
 		Expect(err).NotTo(HaveOccurred())
-		Expect(version).To(Equal("OTP-26.2.5"))
-	})
-
-	it("preserves OTP- prefix if present", func() {
-		err := os.WriteFile(path, []byte("erlang OTP-27.3.4"), 0644)
-		Expect(err).NotTo(HaveOccurred())
-
-		version, err := parser.ParseVersion(path)
-		Expect(err).NotTo(HaveOccurred())
-		Expect(version).To(Equal("OTP-27.3.4"))
+		Expect(version).To(Equal("26.2.5"))
 	})
 
 	it("skips comments and empty lines", func() {
@@ -85,7 +76,7 @@ func testToolVersionsParser(t *testing.T, context spec.G, it spec.S) {
 
 		version, err := parser.ParseVersion(path)
 		Expect(err).NotTo(HaveOccurred())
-		Expect(version).To(Equal("OTP-28.1.1"))
+		Expect(version).To(Equal("28.1.1"))
 	})
 
 	it("handles whitespace variations", func() {
@@ -95,7 +86,7 @@ func testToolVersionsParser(t *testing.T, context spec.G, it spec.S) {
 
 		version, err := parser.ParseVersion(path)
 		Expect(err).NotTo(HaveOccurred())
-		Expect(version).To(Equal("OTP-28.0.1"))
+		Expect(version).To(Equal("28.0.1"))
 	})
 
 	context("when erlang is not specified", func() {
