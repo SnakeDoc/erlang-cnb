@@ -9,10 +9,11 @@ import (
 )
 
 func main() {
+	ToolVersionsParser := erlang.NewToolVersionsParser()
 	logger := scribe.NewEmitter(os.Stdout).WithLevel(os.Getenv("BP_LOG_LEVEL"))
 
 	packit.Run(
-		erlang.Detect(),
+		erlang.Detect(ToolVersionsParser),
 		erlang.Build(logger),
 	)
 }
