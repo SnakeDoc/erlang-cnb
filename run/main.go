@@ -5,15 +5,17 @@ import (
 
 	erlang "github.com/SnakeDoc/erlang-cnb"
 	"github.com/paketo-buildpacks/packit/v2"
+	"github.com/paketo-buildpacks/packit/v2/chronos"
 	"github.com/paketo-buildpacks/packit/v2/scribe"
 )
 
 func main() {
 	ToolVersionsParser := erlang.NewToolVersionsParser()
-	logger := scribe.NewEmitter(os.Stdout).WithLevel(os.Getenv("BP_LOG_LEVEL"))
+	installer := erlang.NewErlangInstaller()
+	logEmitter := scribe.NewEmitter(os.Stdout).WithLevel(os.Getenv("BP_LOG_LEVEL"))
 
 	packit.Run(
 		erlang.Detect(ToolVersionsParser),
-		erlang.Build(logger),
+		erlang.Build(installer, logEmitter, chronos.DefaultClock),
 	)
 }
