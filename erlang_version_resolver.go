@@ -16,17 +16,14 @@ const (
 
 func ResolveVersion(arch, ubuntuVersion string) (string, error) {
 	if version := os.Getenv("BP_ERLANG_VERSION"); version != "" {
-		return NormalizeVersion(version), nil
+		return version, nil
 	}
 
 	return fetchLatestVersion(arch, ubuntuVersion)
 }
 
-func NormalizeVersion(version string) string {
-	if !strings.HasPrefix(version, "OTP-") {
-		return "OTP-" + version
-	}
-	return version
+func parseOTPVersion(version string) string {
+	return strings.TrimPrefix(version, "OTP-")
 }
 
 func fetchLatestVersion(arch, ubuntuVersion string) (string, error) {
@@ -42,7 +39,11 @@ func fetchLatestVersion(arch, ubuntuVersion string) (string, error) {
 		return "", fmt.Errorf("failed to fetch latest Erlang version from %s: received status code %d", url, resp.StatusCode)
 	}
 
-	return ParseLatestStableVersion(resp.Body)
+	version, err := ParseLatestStableVersion(resp.Body)
+	if err != nil {
+		return "", err
+	}
+	return parseOTPVersion(version), nil
 }
 
 // stable releases have the format "OTP-x.y.z.*"
@@ -68,7 +69,7 @@ func ParseLatestStableVersion(r io.Reader) (string, error) {
 			continue
 		}
 
-		versionPart := strings.TrimPrefix(versionTag, "OTP-")
+		versionPart := parseOTPVersion(versionTag)
 		ver, _ := parseVersion(versionPart)
 
 		if latestVer == nil || compareVersions(ver, latestVer) > 0 {
@@ -93,7 +94,7 @@ func isStableVersion(versionTag string) bool {
 		return false
 	}
 
-	versionPart := strings.TrimPrefix(versionTag, "OTP-")
+	versionPart := parseOTPVersion(versionTag)
 
 	_, err := parseVersion(versionPart)
 	if err != nil {

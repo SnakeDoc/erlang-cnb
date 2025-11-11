@@ -22,21 +22,21 @@ func testErlangInstaller(t *testing.T, context spec.G, it spec.S) {
 		it("constructs the correct download URL", func() {
 			installer := erlang.NewErlangInstaller()
 
-			url := installer.BuildDownloadURL("amd64", "ubuntu-24.04", "OTP-28.1.1")
+			url := installer.BuildDownloadURL("amd64", "ubuntu-24.04", "28.1.1")
 			Expect(url).To(Equal("https://builds.hex.pm/builds/otp/amd64/ubuntu-24.04/OTP-28.1.1.tar.gz"))
 		})
 
 		it("works with amd64 architecture", func() {
 			installer := erlang.NewErlangInstaller()
 
-			url := installer.BuildDownloadURL("amd64", "ubuntu-20.04", "OTP-24.0.5")
+			url := installer.BuildDownloadURL("amd64", "ubuntu-20.04", "24.0.5")
 			Expect(url).To(Equal("https://builds.hex.pm/builds/otp/amd64/ubuntu-20.04/OTP-24.0.5.tar.gz"))
 		})
 
 		it("works with arm64 architecture", func() {
 			installer := erlang.NewErlangInstaller()
 
-			url := installer.BuildDownloadURL("arm64", "ubuntu-22.04", "OTP-27.3.4")
+			url := installer.BuildDownloadURL("arm64", "ubuntu-22.04", "27.3.4")
 			Expect(url).To(Equal("https://builds.hex.pm/builds/otp/arm64/ubuntu-22.04/OTP-27.3.4.tar.gz"))
 		})
 	})

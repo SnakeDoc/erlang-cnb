@@ -13,18 +13,6 @@ import (
 func testErlangVersionResolver(t *testing.T, context spec.G, it spec.S) {
 	var Expect = NewWithT(t).Expect
 
-	context("NormalizeVersion", func() {
-		it("adds OTP- prefix if missing", func() {
-			result := erlang.NormalizeVersion("28.1.1")
-			Expect(result).To(Equal("OTP-28.1.1"))
-		})
-
-		it("preserves OTP- prefix if present", func() {
-			result := erlang.NormalizeVersion("OTP-28.1.1")
-			Expect(result).To(Equal("OTP-28.1.1"))
-		})
-	})
-
 	context("ParseLatestStableVersion", func() {
 		it("finds the latest stable version", func() {
 			input := `	OTP-27.2 hash1 2024-12-11T10:30:23Z
@@ -135,7 +123,7 @@ func testErlangVersionResolver(t *testing.T, context spec.G, it spec.S) {
 			it("returns the normalized version from the environment variable", func() {
 				result, err := erlang.ResolveVersion("amd64", "ubuntu-24.04")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(result).To(Equal("OTP-28.1.1"))
+				Expect(result).To(Equal("28.1.1"))
 			})
 		})
 	})

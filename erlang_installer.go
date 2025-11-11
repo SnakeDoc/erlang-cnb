@@ -3,6 +3,7 @@ package erlang
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/paketo-buildpacks/packit/v2/vacation"
 )
@@ -17,8 +18,16 @@ func NewErlangInstaller() ErlangInstaller {
 	return ErlangInstaller{}
 }
 
+func formatOTPVersion(version string) string {
+	if !strings.HasPrefix(version, "OTP-") {
+		return "OTP-" + version
+	}
+	return version
+}
+
 func (i ErlangInstaller) BuildDownloadURL(arch, ubuntuVersion, version string) string {
-	return fmt.Sprintf(DownloadURLTemplate, arch, ubuntuVersion, version)
+	normalizedVersion := formatOTPVersion(version)
+	return fmt.Sprintf(DownloadURLTemplate, arch, ubuntuVersion, normalizedVersion)
 }
 
 func (i ErlangInstaller) Install(url, layerPath string) error {
